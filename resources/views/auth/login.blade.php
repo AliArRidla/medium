@@ -98,7 +98,7 @@
                   <div class="validate"></div>
                 </div>
                 <div class="form-group col-md-12">
-                  <label for="password">Your Email</label>
+                  <label for="password">Password</label>
                   <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" required autocomplete="current-password" data-msg="Please enter a valid password" />
                     @error('password')
                         <span class="invalid-feedback" role="alert">
