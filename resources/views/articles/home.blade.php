@@ -41,7 +41,10 @@
             @foreach ($articles as $article)
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                 <div class="member">
-                <img src="img/team/team-1.jpg" alt="">
+                {{-- <img src="{{$article->image}}" alt=""> --}}
+                {{-- <img src="{{ Storage::url(Session::get('file')) }}" alt=""> --}}
+                <img src="{{asset('storage/'.$article -> image)}}" alt="">
+                {{-- <img src="{{asset('public/'.$article -> image)}}" alt=""> --}}
                 <h4>{{$article->title}}</h4>
                 <span>Author : {{$article->author}}</span>
                 <p>

@@ -26,6 +26,9 @@
       <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mystyle.css') }}" rel="stylesheet">
+
+    {{-- Template admin --}}
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
 <body>
     @include('layouts.header')
@@ -50,13 +53,14 @@
   <script src="js/main.js"></script>
   <script src="js/app.js"></script>
   <script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
+  <script src="{{asset('js/sb-admin-2.min.css')}}"></script>
   <script src="//cdn.ckeditor.com/4.15.0/full/ckeditor.js"></script>
-   <script>
+   {{-- <script>
         var body = document.getElementById("body");
             CKEDITOR.replace(body,{
             language:'en-gb'
         });
         CKEDITOR.config.allowedContent = true;
-    </script>
+    </script> --}}
 </body>
 </html>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginController extends Controller
 {
@@ -38,11 +40,28 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // public function redirectTo()
+    // {
+    //     $for = [
+    //         'admin' => 'dashboard', 'user' => 'home',
+    //     ];
+    //     return $this->redirectTo = route($for[auth()->user()->roles]);
+    // }
+
     public function redirectTo()
     {
-        $for = [
-            'Administrator' => 'home', 'User' => 'post.index',
-        ];
-        return $this->redirectTo = route($for[auth()->user()->roles]);
+        $roles = Auth::user()->roles;
+        switch ($roles) {
+            case 'admin':
+                return '/dashboard';
+                break;
+            case 'user':
+                return '/home';
+                break;
+
+            default:
+                return '/home';
+                break;
+        }
     }
 }

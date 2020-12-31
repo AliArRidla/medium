@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class ArticleController extends Controller
 {
@@ -16,99 +18,81 @@ class ArticleController extends Controller
             abort(403, 'Anda tidak memiliki cukup hak akses');
         });
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function cetak(Article $article)
+    {
+        $articles = Article::findOrFail($article->id);
+        $pdf = PDF::loadview('articles.articlesPDF', compact('articles'));
+        return $pdf->stream();
+        // return $pdf->download('laporan-pegawai-pdf');
+        // return view('articles.articlesPDF', compact('articles'));
+    }
+
     public function index()
     {
         $articles = Article::all();
         return view('articles.home', compact('articles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
+
         $articles = Article::all();
         return view('articles.create', compact('articles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // Validate the request...
-
+        if ($request->file('file')) {
+            $files = $request->file('file')->store('img/article', 'public');
+        }
+        $request->validate([
+            'file' => 'required|mimes:png,jpg,jpeg|max:2048'
+        ]);
         $article = new Article();
 
         $article->title = $request->title;
-        $article->body = $request->body;
         $article->author = $request->author;
+        $article->body = $request->body;
+        $article->image = $files;
         $article->save();
         return redirect()->route('article')
             ->with('success', 'Article created successfully.');
         //Redirect ke halaman books/index.blade.php dengan pesan success
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function show(Article $article)
     {
         return view('articles.detail', compact('article'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Article $article)
     {
         return view('articles.edit', compact('article'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Article $article)
     {
-        //
-        // $article = new Article();
-        $article = Article::findOrFail($article->id);
+        $article = Article::find($article->id);
         $article->title = $request->title;
         $article->body = $request->body;
         $article->author = $request->author;
-        $article->update();
-        return redirect()->route('article')
-            ->with('success', 'Article updated successfully.'); //Redirect ke halaman books/index.blade.php dengan pesan success
 
+        if (
+            $article->image && file_exists(storage_path('app/public/' . $article->image))
+        ) {
+            Storage::delete('public/' . $article->image);
+        }
+        $nama_image = $request->file('image')->store('images', 'public');
+        $article->image = $nama_image;
 
+        $article->save();
+        return redirect()->route('article');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Article $article)
     {
         $article = Article::findOrFail($article->id);

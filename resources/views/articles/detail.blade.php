@@ -25,7 +25,8 @@
             {{-- <img src="images/{{$article -> image}}" class="img-fluid" alt=""> --}}
             {{-- <img src="{{URL::to('images/'.$article->image)}}" class="img-fluid" alt=""> --}}
 
-            <img src="{{asset('img/portfolio/portfolio-3.jpg')}}" class="img-fluid" alt="">
+            {{-- <img src="{{asset('img/portfolio/portfolio-3.jpg')}}" class="img-fluid" alt=""> --}}
+               <img src="{{asset('storage/'.$article -> image)}}" class="img-fluid"  alt="">
           </div>
 
           <div class="portfolio-info">
@@ -44,7 +45,7 @@
           <h2>{{$article -> judul}}</h2>
           <p>{{$article -> body}}</p>
         </div>
-
+      <a href="/articles/cetak/{{$article->id}}" class="btn btn-primary" target="_blank">CETAK PDF</a>
       </div>
     </section><!-- End Portfolio Details Section -->
 @endsection

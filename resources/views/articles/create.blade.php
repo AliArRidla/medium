@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <form class="login" method="POST" action="/store">
+        <form class="login" method="POST" action="/store" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Judul</label>
@@ -16,8 +16,16 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="body">Example textarea</label>
-                <textarea class="form-control" name="body" id="body" rows="6" placeholder="isi artikel mu disini"></textarea>
+               <label for="body">body</label>
+                <input type="text" name="body" class="form-control" id="body" placeholder="Masukkan body">
+            </div>
+            {{-- <div class="form-group">
+               <label for="image">Image</label>
+                <input type="file" name="image" class="form-control" id="image" placeholder="Masukkan image">
+            </div> --}}
+            <div class="form-group">
+               <label for="file">Image</label>
+                <input type="file" name="file" class="form-control" id="file" placeholder="Masukkan image">
             </div>
             <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
         </form>

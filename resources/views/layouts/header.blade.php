@@ -12,10 +12,10 @@
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           {{-- <li><a href="#portfolio">Portfolio</a></li> --}}
-            <li class="nav-item {{ Route::is('post.index') ? 'active' : '' }}">
-              @can('isUser')
-                    <a href="posts">Post</a>
-                @endcan              
+            <li class="nav-item {{ Route::is('news') ? 'active' : '' }}">
+              {{-- @can('isUser') --}}
+                    <a href="news">News</a>
+                {{-- @endcan               --}}
             </li>
             <li class="nav-item {{ Route::is('article') ? 'active' : '' }}">
                 @can('isUser')
@@ -33,17 +33,19 @@
                 @endif
             @else
                 <li class="drop-down">
-                    <a href="#">{{ Auth::user()->name }} <span class="caret"></span></a>
+                    <img src="{{asset('img/favicon.png')}}" alt="" srcset="">
+                    {{-- <a href="#">{{ Auth::user()->name }} <span class="caret"></span></a> --}}
                 <ul>
-                    <li>
+                    <li><a href="/profile/{{Auth::user()->id}}">Profile</a></li>
+                    <li>                        
                          <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
-                        </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                        </a>                                                
                     </li>
                 </ul>                    
                 </li>

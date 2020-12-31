@@ -1,3 +1,7 @@
 .login {
     padding-top: 70px;
 }
+.rounded-circle {
+    height: 200px;
+    width: 200px;
+}
