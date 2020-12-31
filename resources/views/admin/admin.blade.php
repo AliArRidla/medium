@@ -53,7 +53,8 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Roles</th>
-                                            <th>Photo</th>                                            
+                                            <th>Photo</th>           
+                                            <th>Action</th>                                 
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -63,6 +64,7 @@
                                             <th>Email</th>
                                             <th>Roles</th>
                                             <th>Photo</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>                                       
@@ -71,7 +73,9 @@
                                             <td>{{$item -> name}}</td>
                                             <td>{{$item -> email}}</td>
                                             <td>{{$item -> roles}}</td>                                            
-                                            <td>{{$item -> image}}</td>                                            
+                                            <td>{{$item -> image}}</td>   
+                                            <td><a href="delete/{{$item->id}}" class="btn btn-danger">Delete</a>
+                                            </td>                                         
                                         </tr>
                                         @endforeach
                                                                                 

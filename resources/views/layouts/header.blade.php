@@ -13,9 +13,9 @@
           <li><a href="#services">Services</a></li>
           {{-- <li><a href="#portfolio">Portfolio</a></li> --}}
             <li class="nav-item {{ Route::is('news') ? 'active' : '' }}">
-              @can('isUser')
+              {{-- @can('isUser') --}}
                     <a href="news">News</a>
-                @endcan              
+                {{-- @endcan               --}}
             </li>
             <li class="nav-item {{ Route::is('article') ? 'active' : '' }}">
                 @can('isUser')

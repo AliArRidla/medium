@@ -32,7 +32,7 @@ Route::get('/articles', 'ArticleController@index')->name('article');
 Route::get('/articles/{article}', 'ArticleController@show')->name('detail');
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['roles:user']], function () {
     Route::get('/create', 'ArticleController@create')->name('create');
     Route::post('/store', 'ArticleController@store')->name('store');
     Route::put('/update/{article}', 'ArticleController@update')->name('update');
@@ -45,9 +45,11 @@ Route::group(['middleware' => ['roles:admin']], function () {
     Route::get('/dashboard', 'AdminController@index')->name("dashboard");
     Route::get('/user/admin', 'AdminController@admin')->name("admin");
     Route::get('/user/biasa', 'AdminController@biasa')->name("biasa");
-    Route::get('/create', 'AdminController@create')->name("tambah");
+    Route::get('/tambah', 'AdminController@create')->name("tambah");
+    Route::get('user/delete/{user}', 'AdminController@destroy')->name("hapus");
     Route::post('/storeAdmin', 'AdminController@store')->name("tambahStore");
     Route::get('/article', 'AdminController@article')->name('allArticle');
+    Route::get('/user/print', 'AdminController@print')->name("printAdmin");
 });
 
 Route::get('/profile/{user}', 'UserController@index')->name("detailUser");

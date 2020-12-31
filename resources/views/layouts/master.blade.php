@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Medium Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('css/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -278,6 +278,9 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                       @yield('nav-user')
+
+
+
 
                     </ul>
 

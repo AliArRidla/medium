@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Article;
+// use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use PDF;
+
 
 class AdminController extends Controller
 {
@@ -13,9 +17,11 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('admin.index');
+        $admin = User::all();
+        $article = Article::all();
+        return view('admin.index', compact('admin', 'article'));
     }
 
     public function admin(User $user)
@@ -65,7 +71,8 @@ class AdminController extends Controller
 
         $admin->name = $request->name;
         $admin->email = $request->email;
-        $admin->password = $request->password;
+
+        $admin->password = Hash::make($request->password);
         $admin->roles = $request->roles;
         $admin->image = $files;
         // return $admin;
@@ -104,7 +111,7 @@ class AdminController extends Controller
      * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, User $admin)
     {
         //
     }
@@ -115,8 +122,18 @@ class AdminController extends Controller
      * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function destroy(User $user)
     {
-        //
+        $user = User::findOrFail($user->id);
+        $user->delete();
+        return redirect()->route('dashboard')
+            ->with('danger', 'Article deleted successfully.'); //Redirect ke halaman books/index.blade.php dengan pesan success
+    }
+
+    public function print()
+    {
+        $data = User::all();
+        $pdf = PDF::loadview('admin.print', compact('data'));
+        return $pdf->stream('laporan.pdf');
     }
 }
